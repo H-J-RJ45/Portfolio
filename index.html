@@ -2,8 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hamza EL Jebli | PortfoLio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Hamza EL Jebli | PortfoLio</title>
 <link rel="icon" href="favicons.svg" type="image/svg+xml">
 <style>
 :root{--bg:#0a0908;--panel:#161412;--line:#2e2a26;--tx:#ece8e1;--mut:#9d968b;--ac:#5be3a0;--ac2:#ff6b8a;--glow:#5be3a033}
@@ -164,6 +163,13 @@ footer{text-align:center;padding:30px;color:var(--mut);font:13px Consolas,monosp
   background:var(--bg);color:var(--ac);transition:.2s}
 .visit:hover{background:var(--ac);color:#06130d;transform:scale(1.12)}
 @media(prefers-reduced-motion:reduce){.cert{transform:none!important}}
+nav .l{display:flex}                       /* ordinateur: l-liens zahrin */
+#bg{display:none}                          /* ☰ makhfi */
+@media(max-width:900px){
+  #bg{display:block}                       /* ☰ kayban */
+  nav .l{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column}
+  nav .l.open{display:flex}                /* mni tclicki, kayban */
+}
 </style>
 </head>
 <body>
@@ -399,6 +405,7 @@ sh=sh.filter(s=>(s.l-=.02)>0);for(const s of sh){s.x+=s.vx;s.y+=s.vy;const g=cx.
 bursts=bursts.filter(b=>(b.l-=.025)>0);for(const b of bursts){b.x+=b.vx;b.y+=b.vy;cx.fillStyle=`rgba(91,227,160,${b.l})`;cx.fillRect(b.x,b.y,3,3)}
 requestAnimationFrame(draw)}
 draw();
+$("#bg").onclick=()=>$("#lk").classList.toggle("open");
 </script>
 </body>
 </html>
