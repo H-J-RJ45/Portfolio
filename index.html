@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hamza EL Jebli | PortfoLio</title>
+<link rel="icon" href="favicons.svg" type="image/svg+xml">
+<style>
+:root{--bg:#0a0908;--panel:#161412;--line:#2e2a26;--tx:#ece8e1;--mut:#9d968b;--ac:#5be3a0;--ac2:#ff6b8a;--glow:#5be3a033}
+body.rec{--bg:#f5f4f1;--panel:#fff;--line:#d9d5cc;--tx:#1b1a18;--mut:#5f5a52;--ac:#0e8a55;--ac2:#c43d5c;--glow:#0000}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 "Segoe UI",system-ui,sans-serif;overflow-x:hidden;transition:background .5s,color .5s}
+canvas#sky{position:fixed;inset:0;z-index:0}
+body.rec canvas#sky,body.rec .glow,body.rec .ring,body.rec .orbit{display:none}
+.glow{position:fixed;width:420px;height:420px;border-radius:50%;background:radial-gradient(var(--glow),transparent 65%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);left:-999px;top:-999px}
+main,nav,footer{position:relative;z-index:2}
+nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 5vw;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
+nav b{font:700 18px Consolas,monospace;color:var(--ac)}
+nav .l{display:flex;gap:20px;align-items:center}
+nav a{color:var(--mut);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--ac)}
+#rm{font:12px Consolas,monospace;color:var(--tx);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:5px 12px;cursor:pointer}
+#rm:hover{border-color:var(--ac)}
+section{padding:90px 5vw;max-width:1100px;margin:auto}
+h2{font:700 28px Consolas,monospace;margin-bottom:30px}
+h2:before{content:"$ ";color:var(--ac)}
+.hero{min-height:90vh;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.status{display:inline-flex;gap:8px;align-items:center;font:13px Consolas,monospace;color:var(--ac);border:1px solid var(--line);padding:4px 12px;border-radius:20px;background:var(--panel)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ac);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.2}}
+h1{font-size:clamp(38px,6vw,62px);line-height:1.1;margin:18px 0 10px}
+h1 span{color:var(--ac)}
+.role{font:20px Consolas,monospace;min-height:32px;color:var(--mut)}
+.role em{font-style:normal;color:var(--tx)}
+.cur{display:inline-block;width:10px;height:20px;background:var(--ac);vertical-align:-3px;animation:blink 1s infinite}
+.hero p{max-width:520px;margin:18px 0 22px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.chips b{font:12px Consolas,monospace;font-weight:400;padding:4px 11px;border:1px solid var(--line);border-radius:14px;background:var(--panel);transition:.2s;cursor:default}
+.chips b:hover{border-color:var(--ac);color:var(--ac);transform:translateY(-3px)}
+.btn{display:inline-block;padding:12px 24px;border-radius:6px;font-weight:600;text-decoration:none;margin:0 10px 8px 0;transition:transform .2s}
+.btn:hover{transform:translateY(-3px)}
+.b1{background:var(--ac);color:#06130d}
+body.rec .b1{color:#fff}
+.b2{border:1px solid var(--ac);color:var(--ac)}
+.photo{position:relative;width:min(340px,80vw);aspect-ratio:1;margin:auto;animation:float 6s ease-in-out infinite;cursor:pointer;perspective:700px}
+@keyframes float{50%{transform:translateY(-16px)}}
+.tilt{position:absolute;inset:0;transition:transform .15s}
+.photo .tilt>img{position:absolute;inset:26px;width:calc(100% - 52px);height:calc(100% - 52px);border-radius:50%;object-fit:cover;border:4px solid var(--panel);background:var(--panel);transition:transform .8s}
+.photo.spin .tilt>img{transform:rotate(360deg)}
+.ring{position:absolute;inset:0;border-radius:50%;border:2px dashed var(--ac);animation:spin 22s linear infinite}
+.ring.r2{inset:10px;border:2px dotted var(--ac2);animation-duration:14s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orbit span img{width:40px;height:40px;object-fit:contain;display:block}
+.orbit{position:absolute;inset:0;animation:spin 12s linear infinite}
+.orbit span{position:absolute;top:-18px;left:calc(50% - 18px);width:36px;height:36px;border-radius:50%;background:var(--panel);border:1px solid var(--ac);display:grid;place-items:center;font-size:17px;animation:spin 12s linear infinite reverse}
+.orbit.o2{animation-duration:18s;animation-direction:reverse;transform:rotate(120deg)}
+.orbit.o2 span{animation-duration:18s;animation-direction:reverse;border-color:var(--ac2)}
+.orbit.o3{animation-duration:15s;transform:rotate(240deg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px;transition:border-color .3s,transform .3s;overflow:hidden}
+.card:hover{border-color:var(--ac)}
+.card h3{font-size:18px;margin-bottom:8px}
+.card p{color:var(--mut);font-size:15px}
+.card .em{font-size:34px;display:block;margin-bottom:8px}
+.tag{display:inline-block;font:12px Consolas,monospace;color:var(--ac);border:1px solid var(--line);padding:2px 9px;border-radius:12px;margin:10px 6px 0 0}
+.skill{margin-bottom:16px}
+.skill div{display:flex;justify-content:space-between;font:14px Consolas,monospace;margin-bottom:5px}
+.bar{height:8px;background:var(--panel);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width 1.4s ease}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 50px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{font:14px Consolas,monospace;color:var(--mut);background:var(--panel);border:1px solid var(--line);padding:8px 16px;border-radius:6px;cursor:pointer}
+.tabs button.on{color:var(--ac);border-color:var(--ac)}
+#pp{min-height:190px}
+#pp ul{margin:10px 0 0 20px;color:var(--mut);font-size:15px}
+.tl{border-left:2px solid var(--line);padding-left:26px}
+.tl div{position:relative;margin-bottom:28px}
+.tl div:before{content:"";position:absolute;left:-34px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--ac)}
+.tl small{font:13px Consolas,monospace;color:var(--ac)}
+.tl p{color:var(--mut)}
+.term{background:#050504;color:#d8d3c9;border:1px solid var(--line);border-radius:10px;overflow:hidden;font:14px/1.7 Consolas,monospace}
+.term header{background:#2b2623;color:#cfc8bd;padding:8px 12px;text-align:center;
+  font:600 13px Consolas,monospace;letter-spacing:.5px;border-bottom:1px solid #000}
+.term pre{padding:18px;white-space:pre-wrap;min-height:150px;color:var(--ac)}
+#dl{cursor:pointer;display:block;padding:14px 18px;border-top:1px solid var(--line);color:#d8d3c9}
+#dl:hover{background:#ffffff0d}
+.contact{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.contact a{color:var(--tx);border:1px solid var(--line);padding:10px 20px;border-radius:6px;text-decoration:none;background:var(--panel)}
+.contact a:hover{border-color:var(--ac);color:var(--ac)}
+#mp{position:fixed;right:16px;bottom:16px;z-index:6;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;gap:12px;align-items:center;font-size:13px}
+#mp button{width:34px;height:34px;border-radius:50%;border:0;background:var(--ac);color:#06130d;font-size:14px;cursor:pointer}
+#mp small{color:var(--mut);display:block}
+.eq{display:flex;gap:2px;align-items:flex-end;height:16px}
+.eq i{width:3px;height:4px;background:var(--ac);border-radius:2px}
+#mp.on .eq i{animation:eq .6s infinite alternate}
+#mp.on .eq i:nth-child(2){animation-delay:.2s}#mp.on .eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{to{height:16px}}
+body.rec #mp{display:none}
+footer{text-align:center;padding:30px;color:var(--mut);font:13px Consolas,monospace;border-top:1px solid var(--line)}
+@media(max-width:800px){.hero,.cols{grid-template-columns:1fr}.hero{text-align:center;padding-top:40px}.hero p{margin-inline:auto}.chips{justify-content:center}nav .l a{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+@keyframes float{50%{transform:translateY(-16px)}}   /* ila kayn déjà, ma t3awdhach */
+
+.pw{position:relative;animation:float 6s ease-in-out infinite;perspective:700px}
+.pw:nth-child(2n){animation-delay:-2s}
+.pw:nth-child(3n){animation-delay:-4s}
+
+.cert{position:relative;height:100%;padding-bottom:62px;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transition:transform .15s,border-color .3s}
+
+.cert .ci{width:46px;height:46px;object-fit:contain;display:block;margin-bottom:12px;
+  padding:6px;background:#f5f4f1;border-radius:10px;transition:transform .8s}
+.cert.spin .ci{transform:rotate(360deg)}
+
+.visit{position:absolute;left:22px;bottom:16px;text-decoration:none;width:38px;height:38px;
+  display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;
+  background:var(--bg);color:var(--ac);transition:.2s}
+.visit:hover{background:var(--ac);color:#06130d;transform:scale(1.12)}
+@media(prefers-reduced-motion:reduce){.cert{transform:none!important}}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas><div class="glow" id="glow"></div>
+<nav><div class="l"><b><img src="logo linked in.svg" alt="logo"></b><a href="#about">À propos</a><a href="#path">Parcours</a><a href="#skills">Compétences</a><a href="#projects">Projets</a><a href="#hobbies">Hobbies</a><a href="#contact">Contact</a></div><button id="rm">Recruiter Mode: Off</button></nav>
+
+<main>
+<section class="hero">
+  <div>
+    <span class="status"><i></i>Disponible ,pour l'instant.</span>
+    <h1>Salut, je suis <span>Hamza EL Jebli</span></h1>
+    <div class="role">Technicien Spécialisé <em id="typed"></em><span class="cur"></span></div>
+    <p>Technicien spécialisé en systèmes et réseaux. Je conçois, sécurise et maintiens des infrastructures fiables.</p>
+    <div class="chips"><b>Linux</b><b>Windows Server</b><b>Cisco</b><b>Proxmox</b><b>Microsoft Excel</b><b>Bash</b><b>Microsoft PowerShell</b><b>Python</b></div>
+    <a class="btn b1" href="HAMZA_EL_JEBLI.pdf" target="_blank">Telecharger Mon CV </a><a class="btn b2" href="#contact">Me contacter</a>
+  </div>
+  <div class="photo" id="photo" title="ME?">
+    <div class="tilt" id="tilt">
+      <div class="ring"></div><div class="ring r2"></div>
+      <div class="orbit"><span><img src="icons8-html-5.svg" alt="html"></span></div><div class="orbit o2"><span><img src="server-svgrepo-com.svg" alt="server"></span></div><div class="orbit o3"><span><img src="cisco-light.svg" alt="cisco"></span></div>
+      <!-- Remplace photo.jpg par ta photo -->
+      <img src="me.jpg" alt="Photo" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23161412%22/%3E%3Ctext x=%2250%22 y=%2263%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%235be3a0%22 font-family=%22monospace%22%3EC_%3C/text%3E%3C/svg%3E'">
+    </div>
+  </div>
+</section>
+
+<section id="about"><h2>whoami</h2>
+  <div class="grid" style="font-size: 20px;">
+    <p>Passionné par les technologies, ambitieux et déterminé, je voue un vif intérêt à l'informatique, aux réseaux et à l'administration système.<br> Toujours désireux d'apprendre et d'explorer de nouvelles technologies, je possède de solides compétences pratiques dans les environnements Linux et Windows.<br> Je dispose d'une expérience confirmée dans la gestion de systèmes réseau, la résolution de problèmes techniques et l'optimisation des infrastructures pour garantir une efficacité maximale.<br> Engagé dans la conception de systèmes fiables et sécurisés, je m'adapte en permanence aux évolutions technologiques. Mon objectif est de transformer des défis techniques complexes en solutions performantes et efficaces..</p>
+  </div>
+</section>
+
+<section id="path"><h2>FORMATION ACADÉMIQUE</h2>
+  <div class="tl">
+    <div><small>2022 --> 2023</small><h3>Baccalauréat</h3><p>Sciences physiques fr.</p></div>
+    <div><small>2023 --> 2024</small><h3>Faculté des Sciences Ben M'sik</h3><p>Electronique, Systèmes embarqués & Télécommunication.</p></div>
+    <div><small>2024 --> 2026</small><h3>Institut Spécialisé de Technologie Appliquée Sidi Moumen</h3><p>Infrastructure digital option: réseaux & systèmes.</p></div>
+  </div>
+</section>
+
+
+<section id="skills"><h2>skills -ls</h2><div class="cols"><div id="sk1"></div><div id="sk2"></div></div></section>
+
+<section id="projects"><h2>ls projets/</h2>
+  <div class="tabs" id="tabs"></div>
+  <div class="card" id="pp"></div>
+  <a class="btn b2" href="https://github.com/H-J-RJ45/MY-TRAVEL" target="_blank"></a>
+</section>
+
+<section id="certs"><h2>certifications</h2>
+  <div class="grid">
+
+    <div class="pw"><div class="card cert">
+      <img class="ci" src="cisco-light.svg" alt="Cisco">
+      <h3>Networking Devices and Initial Configuration</h3>
+      <p>Cisco Networking Academy</p>
+      <a class="visit" href="https://www.credly.com/badges/199201f1-9839-4964-8244-d78c22489562" target="_blank" rel="noopener" title="Visiter" aria-label="Visiter">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div></div>
+
+    <div class="pw"><div class="card cert">
+      <img class="ci" src="cisco-light.svg" alt="Cisco">
+      <h3>Essentiel de réseau</h3>
+      <p>Cisco Networking Academy</p>
+      <a class="visit" href="https://drive.google.com/drive/folders/1SbURV0SWs2zpX8HDUfemj8D721mV81GF" target="_blank" rel="noopener" title="Visiter" aria-label="Visiter">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div></div>
+
+    <div class="pw"><div class="card cert">
+      <img class="ci" src="icons8-html-5.svg" alt="HTML">
+      <h3>HTML Essentials</h3>
+      <p>Formation HTML</p>
+      <a class="visit" href="https://www.credly.com/badges/81336b69-c379-4b7a-b912-3c4a6e1ed3f2/public_url" target="_blank" rel="noopener" title="Visiter" aria-label="Visiter">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div></div>
+
+    <div class="pw"><div class="card cert">
+      <img class="ci" src="microsoft-svgrepo-com.svg" alt="Microsoft">
+      <h3>Review Windows PowerShell</h3>
+      <p>Microsoft</p>
+      <a class="visit" href="https://learn.microsoft.com/api/achievements/share/fr-fr/hamzaELJEBLI-8781/BU25SJFD?sharingId=BA4F362797E0EA8C" target="_blank" rel="noopener" title="Visiter" aria-label="Visiter">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div></div>
+
+    <div class="pw"><div class="card cert">
+      <img class="ci" src="microsoft-svgrepo-com.svg" alt="Microsoft">
+      <h3>Projet guidé : administrer les services de domaine Active Directory</h3>
+      <p>Microsoft</p>
+      <a class="visit" href="https://learn.microsoft.com/api/achievements/share/fr-fr/hamzaELJEBLI-8781/QL74TXRE?sharingId=BA4F362797E0EA8C" target="_blank" rel="noopener" title="Visiter" aria-label="Visiter">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div></div>
+
+  </div>
+</section>
+
+<section id="hobbies"><h2>hobbies</h2>
+  <div class="grid">
+    <div class="card"><span class="em"><img src="football-shoe-soccer-sport-sports-svgrepo-com.svg"height="60px" width="60px"> </span><h3>Football</h3><p>Le jeu d'équipe, comme en infrastructure.</p></div>
+    <div class="card"><span class="em"><img src="swimming-swimming-pool-svgrepo-com.svg" height="60px" width="60px"></span><h3>Natation</h3><p> Relaxant, mais ça demande parfois beaucoup de travail !.</p></div>
+  </div>
+</section>
+
+<section id="contact"><h2>Contact HJ</h2>
+  <div class="term"><header><i></i><i></i><i></i>C.V@DOWN~</header><pre id="ping"></pre>
+  <a id="dl">$ ./download_resume.sh <span style="color:var(--mut)">clique pour télécharger mon CV</span></a></div>
+  <div class="contact"><a> 07.70.49.09.33</a><a href="mailto:hamzaeljebli06@gmail.com">Email</a><a href="https://www.linkedin.com/in/ hamza-el-jebli-6aab373a3" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/H-J-RJ45" target="_blank" rel="noopener">GitHub</a></div>
+</section>
+</main>
+<footer>© HJ @ IT Systèmes & Réseaux</footer>
+
+<div id="mp">
+  <button id="pl">▶</button>
+  <div><small>Listen!!</small></div>
+  <div class="eq"><i></i><i></i><i></i></div>
+  <audio id="au" src="ElevenLabs_2026-09-08T23_46_01_Alex - Intelligent, Friendly, Confident_pvc_sp100_s100_sb100_se0_b_m2.mp3 " preload="none"></audio>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+// Texte tapé
+const roles=["Systèmes & Réseaux","Administrateur Linux","Sécurité réseau","Support infrastructure"];
+let ri=0,ci=0,del=false;
+(function t(){const w=roles[ri];ci+=del?-1:1;$("#typed").textContent=w.slice(0,ci);
+if(!del&&ci===w.length){del=true;return setTimeout(t,1600)}
+if(del&&ci===0){del=false;ri=(ri+1)%roles.length}setTimeout(t,del?40:90)})();
+
+// Compétences
+const S1=[["Windows Server / AD",70],["Linux",80],["Virtualisation (Proxmox)",80],["Bash / PowerShell",75]];
+const S2=[["Networking (routage, switching)",80]];
+const fill=(id,a)=>$(id).innerHTML=a.map(s=>`<div class="skill"><div><span>${s[0]}</span><span>${s[1]}%</span></div><div class="bar"><i data-w="${s[1]}"></i></div></div>`).join("");
+fill("#sk1",S1);fill("#sk2",S2);
+new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){document.querySelectorAll("[data-w]").forEach(b=>b.style.width=b.dataset.w+"%");o.disconnect()}},{threshold:.3}).observe($("#skills"));
+
+document.querySelectorAll(".pw").forEach(w=>{
+  const c=w.querySelector(".cert");
+  w.addEventListener("mousemove",e=>{
+    const r=w.getBoundingClientRect(),
+          x=(e.clientX-r.left)/r.width-.5,
+          y=(e.clientY-r.top)/r.height-.5;
+    c.style.setProperty("--ry",x*30+"deg");
+    c.style.setProperty("--rx",-y*30+"deg");
+  });
+  w.addEventListener("mouseleave",()=>{
+    c.style.setProperty("--ry","0deg");
+    c.style.setProperty("--rx","0deg");
+  });
+  c.addEventListener("click",e=>{
+    if(e.target.closest(".visit")) return;
+    c.classList.add("spin");
+    setTimeout(()=>c.classList.remove("spin"),850);
+  });
+});
+
+// Projets en onglets
+const P=[
+  {
+    name:"MY Travel .HTML",
+    desc:"Voyage Interactif intégrant des informations clés sur une destination touristique, avec un balisage propre, structuré et optimisé.",
+    tags:["HTML"],
+    link:"https://github.com/H-J-RJ45/MY-TRAVEL"
+  }
+];
+
+const pbtn=$("#projects .btn");   // l-bouton li ta7t l-carte
+
+P.forEach((p,i)=>{
+  const b=document.createElement("button");
+  b.textContent=p.name;
+  b.onclick=()=>show(i);
+  $("#tabs").append(b);
+});
+
+function show(i){
+  const p=P[i];
+  [...$("#tabs").children].forEach((b,j)=>b.classList.toggle("on",i===j));
+
+  $("#pp").innerHTML=
+    `<h3>${p.name}</h3><p>${p.desc}</p>`+
+    (p.tags?p.tags.map(t=>`<span class="tag">${t}</span>`).join(""):"")+
+    (p.steps?`<h3 style="margin-top:18px;font-size:15px">Prochaines étapes</h3><ul>${p.steps.map(x=>`<li>${x}</li>`).join("")}</ul>`:"");
+
+  // l-bouton ta7t l-carte
+  if(p.link){
+    pbtn.textContent="Voir le projet ↗";
+    pbtn.href=p.link;
+    pbtn.target="_blank";
+    pbtn.rel="noopener";
+    pbtn.style.display="inline-block";
+  }else{
+    pbtn.style.display="none";      // ila ma kaynch lien, kaytkhba
+  }
+}
+show(0);
+
+// Terminal ping
+const L=["$ ping HJ.local","64 bytes: icmp_seq=1 ttl=64 time=0.4 ms","64 bytes: icmp_seq=2 ttl=64 time=0.3 ms","--- 2 packets transmitted, 2 received, 0% loss ---","Prêt à travailler avec toi."];let li=0;
+new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();(function n(){if(li<L.length){$("#ping").textContent+=L[li++]+"\n";setTimeout(n,650)}})()}},{threshold:.4}).observe($("#ping"));
+$("#dl").onclick=()=>{$("#ping").textContent+="\n$ ./download_resume.sh\nPréparation du CV...\n";setTimeout(()=>{$("#ping").textContent+="Téléchargement lancé ✓\n";const a=document.createElement("a");a.href="HAMZA_EL_JEBLI.pdf";a.download="CV-HJ.pdf";a.click()},900)};
+
+// Audio dyali
+const au = $("#au");
+$("#pl").onclick = () => au.paused ? au.play() : au.pause();
+au.onplay  = () => { $("#mp").classList.add("on");    $("#pl").textContent = "❚❚"; };
+au.onpause = au.onended = () => { $("#mp").classList.remove("on"); $("#pl").textContent = "▶"; };
+
+// Recruiter Mode
+$("#rm").onclick=()=>{const on=document.body.classList.toggle("rec");$("#rm").textContent="Recruiter Mode: "+(on?"On":"Off");if(on)au.pause()};
+
+// Photo : inclinaison avec la souris + clic
+const ph=$("#photo");
+ph.addEventListener("mousemove",e=>{const r=ph.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;$("#tilt").style.transform=`rotateY(${x*30}deg) rotateX(${-y*30}deg)`});
+ph.addEventListener("mouseleave",()=>$("#tilt").style.transform="");
+ph.onclick=()=>{ph.classList.add("spin");setTimeout(()=>ph.classList.remove("spin"),850)};
+
+// Ciel étoilé interactif
+const cv=$("#sky"),cx=cv.getContext("2d");let W,H,st=[],sh=[],mx=0,my=0,bursts=[];
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight;st=Array.from({length:Math.round(W*H/5500)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,z:Math.random()*.9+.1,p:Math.random()*6.28,s:Math.random()*.03+.01,c:["#fff","#fff","#ffe9d6","#ffd6e0","#d6ffe9"][Math.random()*5|0]}))}
+size();addEventListener("resize",size);
+addEventListener("mousemove",e=>{mx=e.clientX/W-.5;my=e.clientY/H-.5;$("#glow").style.left=e.clientX+"px";$("#glow").style.top=e.clientY+"px"});
+addEventListener("click",e=>{for(let i=0;i<14;i++){const a=Math.PI*2*i/14;bursts.push({x:e.clientX,y:e.clientY,vx:Math.cos(a)*(1+Math.random()*2),vy:Math.sin(a)*(1+Math.random()*2),l:1})}});
+setInterval(()=>{if(!document.body.classList.contains("rec"))sh.push({x:Math.random()*W,y:Math.random()*H*.4,vx:7+Math.random()*4,vy:3+Math.random()*3,l:1})},3500);
+function draw(){cx.clearRect(0,0,W,H);
+for(const s of st){s.p+=s.s;const o=.45+.55*Math.sin(s.p),px=s.x-mx*40*s.z,py=s.y-my*40*s.z;
+const d=Math.hypot(px-(mx+.5)*W,py-(my+.5)*H),g=d<140?1.8-d/140:0;
+cx.globalAlpha=Math.min(1,o*s.z+g*.5);cx.fillStyle=s.c;cx.beginPath();cx.arc(px,py,s.r*(1+g),0,7);cx.fill()}
+cx.globalAlpha=1;
+sh=sh.filter(s=>(s.l-=.02)>0);for(const s of sh){s.x+=s.vx;s.y+=s.vy;const g=cx.createLinearGradient(s.x,s.y,s.x-s.vx*8,s.y-s.vy*8);g.addColorStop(0,`rgba(255,255,255,${s.l})`);g.addColorStop(1,"rgba(255,255,255,0)");cx.strokeStyle=g;cx.lineWidth=2;cx.beginPath();cx.moveTo(s.x,s.y);cx.lineTo(s.x-s.vx*8,s.y-s.vy*8);cx.stroke()}
+bursts=bursts.filter(b=>(b.l-=.025)>0);for(const b of bursts){b.x+=b.vx;b.y+=b.vy;cx.fillStyle=`rgba(91,227,160,${b.l})`;cx.fillRect(b.x,b.y,3,3)}
+requestAnimationFrame(draw)}
+draw();
+</script>
+</body>
+</html>
