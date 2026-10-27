@@ -166,6 +166,7 @@ footer{text-align:center;padding:30px;color:var(--mut);font:13px Consolas,monosp
 <section id="projects"><h2>ls projets/</h2>
   <div class="tabs" id="tabs"></div>
   <div class="card" id="pp"></div>
+  <a class="btn b2" href="https://github.com/H-J-RJ45/MY-TRAVEL" target="_blank"></a>
 </section>
 
 <section id="certs"><h2>certifications</h2>
@@ -279,10 +280,43 @@ document.querySelectorAll(".pw").forEach(w=>{
 
 // Projets en onglets
 const P=[
-["MY Travel .HTML","Voyage Interactif intégrant des informations clés sur une destination touristique, avec un balisage propre, structuré et optimisé.",["Proxmox","VLAN"],["Ajouter la haute disponibilité","Automatiser avec Ansible"]]];
-P.forEach((p,i)=>{const b=document.createElement("button");b.textContent=p[0];b.onclick=()=>show(i);$("#tabs").append(b)});
-function show(i){const p=P[i];[...$("#tabs").children].forEach((b,j)=>b.classList.toggle("on",i===j));
-$("#pp").innerHTML=`<h3>${p[0]}</h3><p>${p[1]}</p>${p[2].map(t=>`<span class="tag">${t}</span>`).join("")}<h3 style="margin-top:18px;font-size:15px">Prochaines étapes</h3><ul>${p[3].map(x=>`<li>${x}</li>`).join("")}</ul>`}
+  {
+    name:"MY Travel .HTML",
+    desc:"Voyage Interactif intégrant des informations clés sur une destination touristique, avec un balisage propre, structuré et optimisé.",
+    tags:["HTML"],
+    link:"https://github.com/H-J-RJ45/MY-TRAVEL"
+  }
+];
+
+const pbtn=$("#projects .btn");   // l-bouton li ta7t l-carte
+
+P.forEach((p,i)=>{
+  const b=document.createElement("button");
+  b.textContent=p.name;
+  b.onclick=()=>show(i);
+  $("#tabs").append(b);
+});
+
+function show(i){
+  const p=P[i];
+  [...$("#tabs").children].forEach((b,j)=>b.classList.toggle("on",i===j));
+
+  $("#pp").innerHTML=
+    `<h3>${p.name}</h3><p>${p.desc}</p>`+
+    (p.tags?p.tags.map(t=>`<span class="tag">${t}</span>`).join(""):"")+
+    (p.steps?`<h3 style="margin-top:18px;font-size:15px">Prochaines étapes</h3><ul>${p.steps.map(x=>`<li>${x}</li>`).join("")}</ul>`:"");
+
+  // l-bouton ta7t l-carte
+  if(p.link){
+    pbtn.textContent="Voir le projet ↗";
+    pbtn.href=p.link;
+    pbtn.target="_blank";
+    pbtn.rel="noopener";
+    pbtn.style.display="inline-block";
+  }else{
+    pbtn.style.display="none";      // ila ma kaynch lien, kaytkhba
+  }
+}
 show(0);
 
 // Terminal ping
