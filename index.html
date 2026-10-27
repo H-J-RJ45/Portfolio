@@ -16,7 +16,8 @@ body.rec canvas#sky,body.rec .glow,body.rec .ring,body.rec .orbit{display:none}
 .glow{position:fixed;width:420px;height:420px;border-radius:50%;background:radial-gradient(var(--glow),transparent 65%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);left:-999px;top:-999px}
 main,nav,footer{position:relative;z-index:2}
 nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 5vw;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
-nav b{font:700 18px Consolas,monospace;color:var(--ac)}
+nav a.logo{font:700 18px Consolas,monospace;color:var(--ac);text-decoration:none;cursor:pointer;transition:.2s}
+nav a.logo:hover{opacity:.8;transform:scale(1.05)}
 nav .l{display:flex;gap:20px;align-items:center}
 nav a{color:var(--mut);text-decoration:none;font-size:14px}
 nav a:hover{color:var(--ac)}
@@ -98,8 +99,51 @@ body.rec .b1{color:#fff}
 @keyframes eq{to{height:16px}}
 body.rec #mp{display:none}
 footer{text-align:center;padding:30px;color:var(--mut);font:13px Consolas,monospace;border-top:1px solid var(--line)}
-@media(max-width:800px){.hero,.cols{grid-template-columns:1fr}.hero{text-align:center;padding-top:40px}.hero p{margin-inline:auto}.chips{justify-content:center}nav .l a{display:none}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+/* Tablette + téléphone */
+@media(max-width:900px){
+  nav{padding:10px 4vw}
+  #bg{display:block}
+  nav .l{display:none;position:absolute;top:100%;left:0;right:0;margin:0;flex-direction:column;align-items:stretch;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:6px 4vw 12px}
+  nav .l.open{display:flex}
+  nav .l a{padding:13px 4px;font-size:16px;border-bottom:1px solid var(--line)}
+  section{padding:70px 5vw}
+  .hero,.cols{grid-template-columns:1fr}
+  .hero{text-align:center;padding-top:30px;min-height:auto;gap:30px}
+  .hero p{margin-inline:auto}
+  .chips{justify-content:center}
+  .hero>div:first-child{order:2}
+  .photo{order:1}
+}
+
+/* Téléphone */
+@media(max-width:600px){
+  body{font-size:15px}
+  section{padding:56px 5vw}
+  h2{font-size:22px;margin-bottom:22px}
+  h1{font-size:34px}
+  .role{font-size:16px;min-height:3.4em}
+  #rm{font-size:11px;padding:5px 9px}
+  nav a.logo{font-size:16px}
+  .btn{display:block;margin:0 0 10px;text-align:center}
+  .photo{width:min(270px,72vw)}
+  .orbit span{width:32px;height:32px;top:-16px;left:calc(50% - 16px)}
+  .grid{grid-template-columns:1fr}
+  .card{padding:18px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}
+  .tabs button{white-space:nowrap;flex:none}
+  .term{font-size:12.5px}
+  .term pre{padding:14px;min-height:130px}
+  #dl{padding:12px 14px}
+  .contact a{flex:1 1 40%;text-align:center}
+  #mp{left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));justify-content:space-between;padding:8px 12px}
+  footer{padding:24px 5vw 100px}
+}
+
+/* Écran tactile : pas de lueur de souris */
+@media(hover:none),(pointer:coarse){.glow{display:none!important}}
+
+/* Utilisateurs qui préfèrent moins d'animations */
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.cert{transform:none!important}}
 
 @keyframes float{50%{transform:translateY(-16px)}}   /* ila kayn déjà, ma t3awdhach */
 
